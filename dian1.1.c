@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(){
+    const char *codes[] = {"001","002","003","004"};
+    const char *names[] = {"cola","lollipop","noodles","dian"};
+    const double prices[] = {3.50,0.50,6.00,9.99};
+
+    char input[50];
+
+    printf("Welcome to the dian minimart,it's POS system's pleasure to serve you.\n");
+
+    while (1) {
+        printf(">");
+        fgets(input,sizeof(input),stdin);
+        input[strcspn(input, "\n")] =0;
+        if (strcmp(input,"quit")==0 || strcmp(input,"exit") ==0) {
+            break;
+        }
+        else if (strcmp(input,"prices") ==0){
+            printf("Item\t\tNo.\tPri.\n");
+            printf("--------------------\n");
+            for (int i =0;i <4;i++){
+                printf ("%s\t\t%s\t%.2f\n",codes[i],names[i],prices[i]);
+            }
+        }
+        else{
+            char *token =strtok(input," ");
+            while (token!=NULL){
+                int found = 0;
+                for (int i = 0;i <4;i++){
+                    if (strcmp(token,codes[i]) == 0){
+                        printf("%s\t\t%.2f\n",names[i],prices[i]);
+                        found = 1 ;
+                        break;
+                    
+                }
+            }
+            if(!found){
+                printf("error:code not found,please ask receptionists for help\n");
+            }
+            token = strtok(NULL," ");
+        }   }
+    }
+    return 0;
+}
